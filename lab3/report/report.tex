@@ -1,5 +1,5 @@
 \documentclass[a4paper,twoside,11pt]{article}
-\usepackage{a4wide,graphicx,subfigure,fancyhdr,amsmath,amssymb,algpseudocode,enumerate,hyperref, float}
+\usepackage{a4wide,graphicx,subfigure,fancyhdr,amsmath,amssymb,algpseudocode,enumerate,hyperref, float,placeins}
 \usepackage[english]{babel}
 \numberwithin{equation}{section}
 
@@ -38,7 +38,7 @@
 
 \author{
 Nicky Advokaat - 0740567 - {\tt n.advokaat@student.tue.nl} \\
-Marcel  Moreaux - ? - {\tt ?}\\
+Marcel  Moreaux - 0499480 - {\tt  m.l.moreaux@student.tue.nl}\\
 }
 
 \date{4\textsuperscript{rd} quartile, 2014}
@@ -49,9 +49,19 @@ Marcel  Moreaux - ? - {\tt ?}\\
 \maketitle
 \thispagestyle{empty}
 \begin{abstract}
-
+This report contains solutions for the problems described in Assignment L3 for the course VLSI Programming. We will transform a parallel FIR filter to a sequential one to reduce hardware utilization. We will create a strength reduced version of this filter.
 \end{abstract}
 
-\input{introduction.tex}
+\tableofcontents
+
+\newpage
+
+\input{specification.tex}
+
+\input{solution.tex}
+
+\input{results.tex}
+
+\input{source.tex}
 
 \end{document}
