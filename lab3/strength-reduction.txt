@@ -1,0 +1,40 @@
+y(n) = SUM(0<=i<32) h(i) * x(n-i)
+
+### odd/even separation, i=2j
+
+y(n) = SUM(0<=j<16) h(2j) * x(n-2j)
+     + SUM(0<=j<16) h(2j+1) * x(n-2j-1)
+
+### block processing, L=2, n=2k
+
+y(2k)   = SUM(0<=j<16) h(2j) * x(2k-2j)
+        + SUM(0<=j<16) h(2j+1) * x(2k-2j-1)
+
+y(2k+1) = SUM(0<=j<16) h(2j) * x(2k+1-2j)
+        + SUM(0<=j<16) h(2j+1) * x(2k+1-2j-1)
+
+### Rewrite
+
+y(2k)   = SUM(0<=j<16) h(2j) * x(2(k-j))
+        + SUM(0<=j<16) h(2j+1) * x(2(k-j-1)+1)
+
+y(2k+1) = SUM(0<=j<16) h(2j) * x(2(k-j)+1)
+        + SUM(0<=j<16) h(2j+1) * x(2(k-j))
+
+### Add & subtract same term
+
+y(2k)   = SUM(0<=j<16) (h(2j) + h(2j+1)) * x(2(k-j))
+        + SUM(0<=j<16) h(2j+1) * (x(2(k-j-1)+1) - x(2(k-j)))
+
+y(2k+1) = SUM(0<=j<16) h(2j) * (x(2(k-j)+1) - x(2(k-j)))
+        + SUM(0<=j<16) (h(2j) + h(2j+1)) * x(2(k-j))
+
+Here, each line is a 16-stage FIR, and lines 1 and 4 are identical so
+they can be shared. We need to figure out a way to map these 3 FIRs to
+3 instances of our sequential FIR module.
+
+
+
+
+
+
