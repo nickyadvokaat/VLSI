@@ -1,0 +1,14 @@
+\section{Problem Specification and Requirements}
+\subsection{Sequential Implementation}
+We want to design a FIR filter with 32 stages to filter an audio file. Earlier we created a parallel implementation which occupied a lot of hardware, including 32 multipliers. Also, the hardware was idle for most of the time because the sample frequency of the audio file is much lower than that of the filter. Because of these reasons we will create a sequential counterpart of this filter, which uses only one multiplier while still being fast enough to process the audio stream in time. \\
+More precisely, our filter has the following requirements.
+\begin{itemize}
+\item It implements a FIR with 32 stages.
+\item It uses exactly one multiplier, and as little other hardware as possible. This implies we have 32 sequential uses of the multiply accumulate in before each output.
+\item It conforms to the 4-phase asynchronous protocol for both input and output. This means we can start computation only once the input is stable, and produce output when receiving a data req.
+\item It runs at 100 MHz. 
+\item It honors changes in the coefficients, so we must update the $h\_in$ values before each computation.
+
+\end{itemize}
+
+\subsection{Strength Reduced Implementation}
