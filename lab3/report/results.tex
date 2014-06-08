@@ -2,8 +2,18 @@
 In this section we report statistics and resource utilization of our design, and analyze the resulting wave forms.
 \subsection{Sequential Implementation}
 \subsubsection{Resources}
+todo
 \subsubsection{Properties}
-\subsubsection{Analysis of filter output}
+\begin{itemize}
+\item Minimum period: 8.754ns (Maximum Frequency: 114.236MHz)
+\end{itemize}
+todo
+\subsection{Strength Reduced}
+\subsubsection{Resources}
+todo
+\subsubsection{Properties}
+todo
+\subsection{Analysis of filter output}
 Here we will analyze the effect of the filter on the input signal. This section corresponds to both the sequential and the strength reduced filter, since they implement the same function, a low pass FIR filter.\\
 The effect of the filter is clearly shown in figure  ~\ref{fig:diff}, where the original signal is plotted together with the filtered signal and the difference between the two signals. It is clear to see that the high frequency harmonics in the original signal have been removed in the filtered signal, because it is much smoother. This is also demonstrated by in the difference signal, which only shows high harmonics. To calculate the difference, we used a scaling factor because the filtered signal is weaker than the original signal. This is caused by the filter coefficients which are:
 \begin{gather*}
@@ -12,18 +22,22 @@ The effect of the filter is clearly shown in figure  ~\ref{fig:diff}, where the 
 The sum of these coefficients is $124$, which gives us a scaling factor of $\frac{256}{124}$. We also shifted the filtered signal by 4, half of the number of coefficients, to have the signals line up better. The figure also shows the start up noise of the filter; the first 32 values are incorrect.
 
 \begin{figure}
+\begin{center}
 \includegraphics[width=0.9\textwidth]{images/diff.png}
 \caption{Part the original signal (red), the filtered signal (blue), and the signal \mbox{(original - $\frac{256}{124}$ * filtered signal)} (green).}
 \label{fig:diff}
+\end{center}
 \end{figure}
 
 Another visualization of the effect of the filter is shown in figure  ~\ref{fig:spectrum} in which the signals are plotted in the frequency domain. The high frequency harmonics are clearly missing in the filtered signal, the stop frequency is around 4000 Hz. 
 
 \begin{figure}
-\includegraphics[width=0.9\textwidth]{images/spectrum_input.png}
-\includegraphics[width=0.9\textwidth]{images/spectrum_output.png}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{images/spectrum_input.png}
+\includegraphics[width=0.7\textwidth]{images/spectrum_output.png}
 \caption{Plot in the frequency domain of the original signal (top) and the signal after filtering (bottom).}
 \label{fig:spectrum}
+\end{center}
 \end{figure}
 
 
