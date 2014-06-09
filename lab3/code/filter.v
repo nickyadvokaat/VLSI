@@ -26,6 +26,7 @@ module filter #(parameter NR_STAGES = 32,
 	reg [0:5] stage; // Counter for the stage we're in
 	reg signed [0:DWIDTH-1] in [0:NR_STAGES-1]; // Cached inputs
 	reg signed [0:DDWIDTH-1] sum; // Accumulator
+	reg signed [0:DDWIDTH-1] acc; // Accumulator
 	reg signed [0:DWIDTH-1] out;
 	assign data_out = out;
 
@@ -39,6 +40,7 @@ module filter #(parameter NR_STAGES = 32,
 			req_in_buf <= 0;
 			req_out_buf <= 0;
 			sum <= 0;
+			acc <= 0;
 			stage <= 0;
 		end
 		// !Reset => run
@@ -48,6 +50,7 @@ module filter #(parameter NR_STAGES = 32,
 			if (req_in && ack_in)
 			begin
 				sum <= 0;
+				acc <= 0;
 				in[0] <= data_in;
 				for (i = 0; i < NR_STAGES - 1; i = i + 1)
 				begin
@@ -68,12 +71,13 @@ module filter #(parameter NR_STAGES = 32,
 				begin
 					req_in_buf <= 1;
 					req_out_buf <= 1;
-					out <= sum;
+					out <= sum + acc;
 					stage <= 0;
 				end
 				else
 				begin
-					sum <= sum + ( (in[stage] * $signed(h_in[stage*DWIDTH+:DWIDTH])) >> DWIDTH );
+					acc <= (in[stage] * $signed(h_in[stage*DWIDTH+:DWIDTH])) >> DWIDTH;
+					sum <= sum + acc;
 					stage <= stage + 1;
 				end
 			end
