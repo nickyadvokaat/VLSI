@@ -4,10 +4,22 @@ In this section we report statistics and resource utilization of our design, and
 \subsubsection{Resources}
 todo
 \subsubsection{Properties}
+The sample frequency of the filter is as follows:
 \begin{itemize}
-\item Minimum period: 8.754ns (Maximum Frequency: 114.236MHz)
+\item
+Synthesis report
+\begin{itemize}
+\item Minimum period: 7.351ns
+\item Maximum Frequency: 136.037MHz
 \end{itemize}
-todo
+\item
+Post-PAR static timing report
+\begin{itemize}
+\item  Minimum period:   9.137ns  
+\item Maximum frequency: 109.445MHz
+\end{itemize}
+\end{itemize}
+The sample frequency is lower in the static timing report, because it takes into account how the circuit will actually be laid out on the FPGA. The important thing here is that the sample frequency meets the 100 MHz requirement, which means this filter is fast enough to process the audio file using only one multiplier.
 \subsection{Strength Reduced}
 \subsubsection{Resources}
 todo
