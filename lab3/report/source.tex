@@ -94,4 +94,38 @@ endmodule
 \end{verbatim}
 \subsection{Strength Reduced Implementation}
 \label{sec:source2}
-todo
+\begin{verbatim}
+`timescale 1ns / 1ps
+
+module filter #(parameter NR_STAGES = 32,
+                parameter DWIDTH = 16,
+                parameter DDWIDTH = 2*DWIDTH,
+                parameter CWIDTH = NR_STAGES * DWIDTH)
+               (input  clk,
+                input  rst,
+                output req_in,
+                input  ack_in,
+                input  [0:DDWIDTH-1] data_in,
+                output req_out,
+                input  ack_out,
+                output [0:DDWIDTH-1] data_out,
+                input  [0:CWIDTH-1] h_in);
+
+    wire req_in1, req_out1;
+    wire req_in2, req_out2;
+
+    subfilter #(NR_STAGES/2, DWIDTH, DDWIDTH, CWIDTH) subf1
+        (clk, rst, req_in1,  ack_in, data_in[0:DWIDTH-1], req_out1, ack_out, 
+        data_out[0:DWIDTH-1], h_in);
+
+    subfilter #(NR_STAGES/2, DWIDTH, DDWIDTH, CWIDTH) subf2
+        (clk, rst, req_in2,  ack_in, data_in[DWIDTH:DDWIDTH-1], req_out2,
+        ack_out, data_out[DWIDTH:DDWIDTH-1], h_in);
+
+    assign req_in = req_in1 & req_in2;
+    assign req_out = req_out1 & req_out2;
+
+endmodule
+
+\end{verbatim}
+
