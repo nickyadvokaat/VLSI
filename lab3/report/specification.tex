@@ -12,4 +12,12 @@ More precisely, our filter has the following requirements.
 \end{itemize}
 
 \subsection{Strength Reduced Implementation}
-Next we want to design a strength reduced FIR filter that implements the same function as the original filter. It accepts 2 input samples at the same time, doubling the sample rate. 
+Next we want to design a strength reduced FIR filter that implements the same function as the original filter. It accepts 2 input samples at the same time, doubling the sample rate. Also, it will have sub filters that only have 16 stages instead of 32.
+\begin{itemize}
+\item It uses exactly at most 3 multipliers. So we could use three sub filters that are similar to the sequential filter.
+\item It should have 4 times the sample frequency of the sequential implementation, this can be achieve the double input samples combined with half the number of stages in a sub filter.
+\item It conforms to the 4-phase asynchronous protocol for both input and output. This means we can start computation only once the input is stable, and produce output when receiving a data req.
+\item It runs at 100 MHz. 
+\item It honors changes in the coefficients, so we must update the $h\_in$ values before each computation.
+
+\end{itemize}

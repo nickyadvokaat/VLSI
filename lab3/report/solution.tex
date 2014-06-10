@@ -91,8 +91,15 @@ $        + \sum_{0<=j<16} h(2j+1) \cdot (x(2(k-j-1)+1) - x(2(k-j)))$\\
 $y(2k+1) = \sum_{0<=j<16} h(2j) \cdot (x(2(k-j)+1) - x(2(k-j)))$\\
 $        + \sum_{0<=j<16} (h(2j) + h(2j+1)) \cdot x(2(k-j))$\\
 \\
-Now the 16-stage FIR filters $y(2k)$ and $y(2k+1)$ share an identical part, which we can use to construct our strength reduced FIR filter.
+Now the 16-stage FIR filters $y(2k)$ and $y(2k+1)$ share an identical part, which we can use to construct our strength reduced FIR filter. The architecture of the final filter is shown in figure ~\ref{fig:architecture_sr}.
 
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{images/architecture_sr.png}
+\caption{Architecture diagram of the strength reduced FIR filter.}
+\label{fig:architecture_sr}
+\end{center}
+\end{figure}
 \subsubsection{Implementation}
 todo
 
