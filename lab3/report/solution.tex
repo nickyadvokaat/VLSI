@@ -58,7 +58,41 @@ end\\
 In each $i^{th}$ of the 32 stages we calculate \texttt{sum += h[i] * data[i]}. Because we pipelined the filter, the multiply and accumulate have a delay between them. When we finished the last stage, we signal that the system is ready to send output and receive new input.
 \subsection{Strength Reduced }
 \subsubsection{Idea}
-todo
+A mathematical deduction of the function for this filter is give below.\\
+\\
+$y(n) = \sum_{0<=i<32} h(i) \cdot x(n-i)$\\
+\\
+Separate the odd and even terms, $ i=2j$\\
+\\
+$y(n) = \sum_{0<=j<16} h(2j) \cdot x(n-2j)$\\
+$\phantom{y(n)} + \sum_{0<=j<16} h(2j+1) \cdot x(n-2j-1)$\\
+\\
+Apply block processing, $L=2, n=2k$\\
+\\
+$y(2k)   = \sum_{0<=j<16} h(2j) \cdot x(2k-2j)$\\
+$\phantom{y(2k)}       + \sum_{0<=j<16} h(2j+1) \cdot x(2k-2j-1)$\\
+\\
+$y(2k+1) = \sum_{0<=j<16) h(2j} \cdot x(2k+1-2j)$\\
+$\phantom{y(2k)}        + \sum_{0<=j<16} h(2j+1) \cdot x(2k+1-2j-1)$\\
+\\
+Do some rewriting\\
+\\
+$y(2k)   = \sum_{0<=j<16} h(2j) \cdot x(2(k-j))$\\
+$       + \sum_{0<=j<16} h(2j+1) \cdot x(2(k-j-1)+1)$\\
+\\
+$y(2k+1) = \sum_{0<=j<16} h(2j) \cdot x(2(k-j)+1)$\\
+$        + \sum_{0<=j<16} h(2j+1) \cdot x(2(k-j))$\\
+\\
+Add \& subtract same term\\
+\\
+$y(2k)   = \sum_{0<=j<16} (h(2j) + h(2j+1)) \cdot x(2(k-j))$\\
+$        + \sum_{0<=j<16} h(2j+1) \cdot (x(2(k-j-1)+1) - x(2(k-j)))$\\
+\\
+$y(2k+1) = \sum_{0<=j<16} h(2j) \cdot (x(2(k-j)+1) - x(2(k-j)))$\\
+$        + \sum_{0<=j<16} (h(2j) + h(2j+1)) \cdot x(2(k-j))$\\
+\\
+Now the 16-stage FIR filters $y(2k)$ and $y(2k+1)$ share an identical part, which we can use to construct our strength reduced FIR filter.
+
 \subsubsection{Implementation}
 todo
 

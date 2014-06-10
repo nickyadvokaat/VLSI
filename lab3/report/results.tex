@@ -2,7 +2,18 @@
 In this section we report statistics and resource utilization of our design, and analyze the resulting wave forms.
 \subsection{Sequential Implementation}
 \subsubsection{Resources}
-todo
+The synthesis report gives us the following properties:
+\begin{verbatim}
+# Multipliers                                          : 1
+ 16x16-bit multiplier                                  : 1
+# Adders/Subtractors                                   : 1
+ 32-bit adder                                          : 1
+# Counters                                             : 1
+ 6-bit up counter                                      : 1
+# Registers                                            : 594
+ Flip-Flops                                            : 594
+\end{verbatim}
+As intended our filter only uses one multiplier. The 32 bit adder is used in the FIR multiply accumulate, the 6 bit counter is used to indicate which state the filter is in. The number of registers is roughly the sum of the number of data\_in registers ($32 \cdot 16 = 512$), plus $2 \cdot 32$ for the multiply and accumulate registers, which adds up to 576. The rest is explained by some req, ack buffers etc. 
 \subsubsection{Properties}
 The sample frequency of the filter is as follows:
 \begin{itemize}
@@ -35,7 +46,7 @@ The sum of these coefficients is $124$, which gives us a scaling factor of $\fra
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.9\textwidth]{images/diff.png}
+\includegraphics[width=0.7\textwidth]{images/diff.png}
 \caption{Part the original signal (red), the filtered signal (blue), and the signal \mbox{(original - $\frac{256}{124}$ * filtered signal)} (green).}
 \label{fig:diff}
 \end{center}
