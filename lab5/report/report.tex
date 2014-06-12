@@ -1,0 +1,67 @@
+\documentclass[a4paper,twoside,11pt]{article}
+\usepackage{a4wide,graphicx,subfigure,fancyhdr,amsmath,amssymb,enumerate,hyperref, float,placeins}
+\usepackage[english]{babel}
+\numberwithin{equation}{section}
+
+%----------------------- Macros and Definitions --------------------------
+
+\setlength\headheight{20pt}
+\addtolength\topmargin{-10pt}
+\addtolength\footskip{20pt}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ch}{\mathcal{CH}}
+
+\fancypagestyle{plain}{%
+\fancyhf{}
+\fancyhead[LO,RE]{\sffamily\bfseries\large}
+\fancyhead[RO,LE]{\sffamily\bfseries\large }
+\fancyfoot[LO,RE]{\sffamily\bfseries\large }
+\fancyfoot[RO,LE]{\sffamily\bfseries\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[RO,LE]{\sffamily\bfseries\large 2IN35}
+\fancyhead[LO,RE]{\sffamily\bfseries\large Lab 5 }
+\fancyfoot[LO,RE]{\sffamily\bfseries\large }
+\fancyfoot[RO,LE]{\sffamily\bfseries\thepage}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{0pt}
+\newcommand{\name}{VLSI Programming}
+
+%-------------------------------- Title ----------------------------------
+
+\title{\vspace{-\baselineskip}\sffamily\bfseries VLSI Lab 5}
+
+\author{
+Nicky Advokaat - 0740567 - {\tt n.advokaat@student.tue.nl} \\
+Marcel  Moreaux - 0499480 - {\tt  m.l.moreaux@student.tue.nl}\\
+}
+
+\date{4\textsuperscript{rd} quartile, 2014}
+
+%--------------------------------- Text ----------------------------------
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\begin{abstract}
+This report contains solutions for the problems described in Assignment L5 for the course VLSI Programming.
+\end{abstract}
+
+\tableofcontents
+
+\newpage
+
+\input{specification.tex}
+
+\input{solution.tex}
+
+\input{results.tex}
+
+\input{source.tex}
+
+\end{document}

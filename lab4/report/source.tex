@@ -1,0 +1,52 @@
+\section{Appendix A: Answers to inline questions}
+\subsection{Question 1}
+\begin{equation*}
+y[n] = z[Mn]
+\end{equation*}
+\begin{equation*}
+z[n] = \sum_{0\leq j < 4L} h[j] \cdot q[n-j]
+\end{equation*}
+\begin{equation*}
+q[n] = \begin{cases}
+x[n \text{ div } L]&\text{if } n \bmod L = 0\\
+0&\text{otherwise}
+\end{cases}
+\end{equation*}
+\begin{equation*}
+y[n] = \sum_{0\leq j<4L} h[j] \cdot q[nM-j]
+\end{equation*}
+\begin{equation*}
+y[n] = \begin{cases}
+\sum_{0 \leq j < 4L} h[j] \cdot q[(nM-j) \text{ div } L]&\text{if } (nM - j) \bmod L = 0\\
+\sum_{0 \leq j < 4L} h[j] \cdot 0 &\text{otherwise}
+\end{cases}
+\end{equation*}
+The \emph{otherwise} case is always 0 so doesn't contribute to the sum.
+We can continue with just:
+\begin{equation*}
+y[n] = \sum_{0\leq j<4L} h[j] \cdot q[(nM-j) \text{ div } L])  \phantom{xxx}\text{ if } (nM-j) \bmod L = 0
+\end{equation*}
+$(nM-j) \bmod L = 0$  happens at:
+\begin{itemize}
+\item $  j = nM \bmod L$
+\item $  j = nM \bmod L + L$
+\item $  j = nM \bmod L + 2L$
+\item $  j = nM \bmod L + 3L$
+\end{itemize}
+So four times in every summation. If we let $j$ run from $0$ to $4$ (excl),
+we get $h[nM \bmod L + jL]$.
+\begin{equation*}
+y[n] = \sum_{0\leq j<4} h[nM \bmod L + jL] \cdot q[(nM-j \cdot L) \text{ div } L]
+\end{equation*}
+\begin{equation*}
+y[n] = \sum_{0\leq j<4} h[nM \bmod L + jL] \cdot q[(nM) \text{ div } L - j]
+\end{equation*}
+Which is the equation from the assignment. 
+
+\subsection{Question 2}
+\subsection{Question 3}
+\section{Appendix B: Verilog source code}
+This appendix includes Verilog source code for the \texttt{filter.v} file in the ISE project.
+
+\begin{verbatim}
+\end{verbatim}
