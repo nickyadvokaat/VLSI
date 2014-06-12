@@ -44,7 +44,36 @@ y[n] = \sum_{0\leq j<4} h[nM \bmod L + jL] \cdot q[(nM) \text{ div } L - j]
 Which is the equation from the assignment. 
 
 \subsection{Question 2}
+The period is $L$.
+
 \subsection{Question 3}
+We assume all values for $h[]$ are precomputed.
+\begin{itemize}
+\item Naive scaler directly
+\begin{itemize}
+\item Multiplications. The number of coefficients is $4L$. For each sample we need the multiply for each coefficient. The frequency of the FIR is $147$ times the output sample frequency. So the number of multiplications per output is $147 \cdot 640 = 94080$.
+\item Coefficients. $4L = 4 \cdot 64 = 640$.
+\item Highest sample rate. $94080 \cdot 48 \text{ kHz } \approx 4.516  \text{ GHz }$ assuming sequential FIR implementation.
+\end{itemize}
+\item Naive scaler composed
+\begin{itemize}
+\item Multiplications. We have $\frac{M_2}{L_2} \cdot M_1 \cdot (4 \cdot L_1) + M_2 \cdot (4 \cdot L_2) = \frac{14}{15} \cdot 63 \cdot (4 \cdot 64) + 14 \cdot (4 \cdot 15) = 15892.8$ multiplications per output. 
+\item Coefficients. $4 \cdot L_1 + 4 \cdot L_2 = 4 \cdot 64 + 4\cdot 15 = 316$.
+\item Highest sample rate. The second sub filter has the highest sample rate at $(4 \cdot 64) \cdot 63 \cdot \frac{14}{15} \cdot 48 \text{ kHz } \approx 722\text{ MHz }$, using sequential FIR.
+\end{itemize}
+\item Equation scaler directly
+\begin{itemize}
+\item Multiplications. In the direct formula the term $jL$ can be precomputed since $0\leq j<4$. The term $nM$ does not need a multiplier because $n$ is incremented by one each time, so we can just add $M$ to a stored value. For the same reason the \emph{mod} and \emph{div} do not need multipliers. In the end this only leave the multiplication for $h[]\cdot x[]$. This is done for each $j$ over the summation, so we need 4 multiplications. 
+\item Coefficients. We need $4L = 640$ coefficients.
+\item Highest sample rate. The filter runs at 4 times the output sample rate, $4 \cdot 48 \text{ kHZ } = 192$ kHz.
+\end{itemize}
+\item Equation scaler composed
+\begin{itemize}
+\item Multiplications. Using the same arguments as with the direct equation scaler we get $4 + 4 \cdot 14/15 \approx 7.7$ multiplications per output.
+\item Coefficients. $4 \cdot 64 + 4\cdot 15 = 316$.
+\item Highest sample rate. The second FIR runs at 4 times the output sample rate, $4 \cdot 48 \text{ kHZ } = 192$ kHz.
+\end{itemize}
+\end{itemize}
 \section{Appendix B: Verilog source code}
 This appendix includes Verilog source code for the \texttt{filter.v} file in the ISE project.
 
