@@ -3,9 +3,9 @@
 module filter
 	#(parameter DWIDTH = 16,
 		parameter DDWIDTH = 2*DWIDTH,
-		parameter L = 4,
+		parameter L = 160,
 		parameter L_LOG = 8,
-		parameter M = 3,
+		parameter M = 147,
 		parameter M_LOG = 8,
 		parameter CWIDTH = 4*L)
 	(input clk,
@@ -30,44 +30,16 @@ module filter
 	reg signed [0:DWIDTH-1] h [0:4*L-1];
 	
 	// Accumulator (assigned to output directly)
+	reg signed [0:DDWIDTH-1] partial1;
+	reg signed [0:DDWIDTH-1] partial2;
+	reg signed [0:DDWIDTH-1] partial3;
+	reg signed [0:DDWIDTH-1] partial4;
 	reg signed [0:DDWIDTH-1] sum;
 	assign data_out = sum >> 15;
-	
+
 	initial
 	begin
-		//h[ 0] = 32767;
-		//h[ 1] = 32767;
-		//h[ 2] = 32767;
-		//h[ 3] = 32767;
-		//h[ 4] = 0;
-		//h[ 5] = 0;
-		//h[ 6] = 0;
-		//h[ 7] = 0;
-		//h[ 8] = 0;
-		//h[ 9] = 0;
-		//h[10] = 0;
-		//h[11] = 0;
-		//h[12] = 0;
-		//h[13] = 0;
-		//h[14] = 0;
-		//h[15] = 0;
-
-		h[ 0] = 16'h0000;
-		h[ 1] = 16'hfdbb;
-		h[ 2] = 16'hf7ed;
-		h[ 3] = 16'hf543;
-		h[ 4] = 16'h0000;
-		h[ 5] = 16'h1dd5;
-		h[ 6] = 16'h48a7;
-		h[ 7] = 16'h6f36;
-		h[ 8] = 16'h7ec2;
-		h[ 9] = 16'h6f36;
-		h[10] = 16'h48a7;
-		h[11] = 16'h1dd5;
-		h[12] = 16'h0000;
-		h[13] = 16'hf543;
-		h[14] = 16'hf7ed;
-		h[15] = 16'hfdbb;
+		$readmemh("coefficients.txt", h);
 	end
 
 	always @(posedge clk)
@@ -112,8 +84,12 @@ module filter
 
 				req_out_buf <= 1;
 
-				sum <= (in[0] * h[l] + in[1] * h[l+L] + in[2] * h[l+L*2] + in[3] * h[l+L*3]);
-				// sum <= l;
+				// sum <= (in[0] * h[l] + in[1] * h[l+L] + in[2] * h[l+L*2] + in[3] * h[l+L*3]);
+				partial1 <= in[0] * h[l];
+				partial2 <= in[1] * h[l+L];
+				partial3 <= in[2] * h[l+L*2];
+				partial4 <= in[3] * h[l+L*3];
+				sum <= partial1 + partial2 + partial3 + partial4;
 			end
 		end
 	end
