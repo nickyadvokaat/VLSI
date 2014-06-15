@@ -29,8 +29,11 @@ module filter
 	reg [0:L_LOG-1] l;
 	// The last 4 input samples used in the FIR
 	reg signed [0:DWIDTH-1] in [0:3];
+
 	// The FIR coefficients (lots of them)
-	reg signed [0:DWIDTH-1] h [0:4*L-1];
+	// Naively, we'd need [0:4L-1], but since the coefficients are
+	// symmetric around h[2L], we can just reuse h[2L-1:1] for // h[2L+1:4L-1]
+	reg signed [0:DWIDTH-1] h [0:2*L];
 	
 	// The 4 products in the sum are buffered as partial results for pipelining
 	reg signed [0:DDWIDTH-1] partial1;
@@ -99,10 +102,10 @@ module filter
 				req_out_buf <= 1;
 
 				// pipelined: sum <= (in[0] * h[l] + in[1] * h[l+L] + in[2] * h[l+L*2] + in[3] * h[l+L*3]);
-				partial1 <= in[0] * h[l];
-				partial2 <= in[1] * h[l+L];
-				partial3 <= in[2] * h[l+L*2];
-				partial4 <= in[3] * h[l+L*3];
+				partial1 <= in[0] * h[l];      // h[l+L*0]
+				partial2 <= in[1] * h[l+L];    // h[l+L*1]
+				partial3 <= in[2] * h[L*2-l];  // h[l+L*2], mirrored
+				partial4 <= in[3] * h[L-l];    // h[l+L*3], mirrored
 				sum <= partial1 + partial2 + partial3 + partial4;
 			end
 		end
