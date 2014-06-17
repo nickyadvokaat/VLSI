@@ -1,5 +1,25 @@
 \section{Results}
 \subsection{Resource Usage}
+This section describes some of the resources that our design uses according to the synthesis report.\\
+\\
+\texttt{321x16-bit dual-port Read Only RAM}\\
+\\
+The ROM is used to store our coefficients, we have $2\cdot L + 1 = 321$ coefficients, each 16 bit long.\\
+\\
+\texttt{16x16 bit multiplier: 4}
+\\
+There are four multipliers in the filter.\\
+\\
+\texttt{32 bit adder: 3}\\
+\\
+There are three adders to add the 4 outputs of the multipliers.\\
+\\
+\texttt{8 bit addsub: 1}\\
+\\
+For the expressions $l <= l + M$  and $l <= l - (L - M)$, which can not happen during the same clock cycle.\\
+\\ 
+\texttt{9 bit adder: 1}
+\texttt{9 bit substractor: 2}
 \subsection{Properties}
 The sample frequency of the filter is as follows:
 \begin{itemize}
