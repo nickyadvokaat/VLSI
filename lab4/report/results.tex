@@ -6,7 +6,7 @@ This section describes some of the resources that our design uses according to t
 \\
 The ROM is used to store our coefficients, we have $2\cdot L + 1 = 321$ coefficients, each 16 bit long.\\
 \\
-\texttt{16x16 bit multiplier: 4}
+\texttt{16x16 bit multiplier: 4}\\
 \\
 There are four multipliers in the filter.\\
 \\
@@ -18,8 +18,37 @@ There are three adders to add the 4 outputs of the multipliers.\\
 \\
 For the expressions $l <= l + M$  and $l <= l - (L - M)$, which can not happen during the same clock cycle.\\
 \\ 
-\texttt{9 bit adder: 1}
-\texttt{9 bit substractor: 2}
+\texttt{9 bit adder: 1}\\
+\\
+To calculate the expression $h[l + L]$.\\
+\\
+\texttt{9 bit substractor: 2}\\
+\\
+To calculate $h[L*2-1]$ and $h[L-l]$.
+\\
+\texttt{8 bit 2-to-1 multiplexer}\\
+\\
+To index the input registers.\\
+\\
+\texttt{1 bit register: 2}\\
+\\
+For \texttt{req\_out\_buf} and \texttt{req\_in\_buf}.\\
+\\
+\texttt{32 bit register: 5}\\
+\\
+We have four buffered outputs from the multipliers, and the input.\\
+\\
+\texttt{64 bit register: 1}\\
+\\
+To store the 4x16 bit input array.\\
+\\
+\texttt{8 bit register: 1}\\
+\\
+Used for to keep track of which state we are in.\\
+\\
+\texttt{8 bit comparator greater}\\
+\\
+To check for overflow of $nM \bmod L$.
 \subsection{Properties}
 The sample frequency of the filter is as follows:
 \begin{itemize}
