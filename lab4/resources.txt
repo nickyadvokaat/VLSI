@@ -16,8 +16,10 @@ We moeten sowieso
  16x16-bit multiplier                                  : 4
  
 // 3 32 bit adders in de filter
-// 1 8 bit addder voor line 89: l <= l + M
-// 1 9 bit substractor voor line 94:l <= l - (L - M)
+// MARCEL:
+// 8-bit addsub zal voor l <= l + M; / l <= l - (L - M); zijn (die zijn mutually exclusive)
+// 9-bit adder voor h[l+L]
+// 3 9-bit subs voor h[L*2-l] en h[L-l]
 # Adders/Subtractors                                   : 7
  32-bit adder                                          : 3
  8-bit addsub                                          : 1
@@ -27,6 +29,11 @@ We moeten sowieso
 // 4 32b registers voor partial1..4
 // 4 32b registers voor input 
 // ? 
+// MARCEL:
+// 5 32b registers: partial1..4 + input
+// 1 64-bit reg: ik vermoed dat Xilinx hier in[0..3] in stopt (4x16 bits, en die worden toch alleen statisch geindexeerd)
+// 1 8-bit register: l (de state counter, ik had dat ding wel een handigere naam mogen geven :P)
+// 1-bit registers: req_out_buf, req_in_buf
 # Registers                                            : 9
  1-bit register                                        : 2
  32-bit register                                       : 5
@@ -38,6 +45,9 @@ We moeten sowieso
  8-bit comparator greater                              : 1
  
 // voor h of input? 
+// MARCEL:
+// Voor h. input wordt alleen statisch geindexeerd (altijd h[2] bv), dus daarvoor kan Xilinx gewoon draadjes leggen.
+// h daarentegen wordt variabel geindexeerd (h[l+L] bv).
 # Multiplexers                                         : 1
  8-bit 2-to-1 multiplexer                              : 1
  
