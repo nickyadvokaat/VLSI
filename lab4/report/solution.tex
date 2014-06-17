@@ -6,7 +6,7 @@ First we had to decide which design option of the 4 given options we were going 
 
 The next choice we had to make was whether to optimize the scaler for resource usage or for throughput. We decided to optimize for throughput. The most important implication this choice has is that we will use 4 parallel multipliers for the FIR, instead of doing 4 sequential multiplications on one multiplier. We can now compose a diagram of the architecture of our system, figure ~\ref{fig:arch}. The coefficients are stored in read only memory (ROM), not visible in the diagram. Some additional hardware is required to get the right coefficient \texttt{h[i]} our of the ROM.
 
-To generate the actual coefficients we wrote a small Java program that given some \texttt{L} generates all coefficients  in 16 bit signed hex notation. We scaled the coefficients such that they sum up to $(2^{15}-1)\cdot L$, this way the output signal will have the same intensity as the input signal.
+To generate the actual coefficients we wrote a small Java program (section ~\ref{sec:java}) that given some \texttt{L} generates all coefficients  in 16 bit signed hex notation. We scaled the coefficients such that they sum up to $(2^{15}-1)\cdot L$, this way the output signal will have the same intensity as the input signal.
 
 \begin{figure}
 \begin{center}

@@ -198,3 +198,73 @@ endmodule
 
 \end{verbatim}
 
+\section{Appendix C: Java source code} \label{sec:java}
+This appendix includes Java code used to generate the coefficients.
+
+\begin{verbatim}
+package vlsi;
+
+public class CoefficientGenerator {
+
+	private final int L = 160;
+	private final int WORD_LENGTH = 32767;
+
+	public CoefficientGenerator() {
+		double[] initcoefficients = new double[4 * L];
+		int[] coefficients = new int[4 * L];
+
+		double sum = 0;
+		double t = -2;
+		for (int i = 0; i < initcoefficients.length; i++) {
+			initcoefficients[i] = lanczos2(t);
+			sum += initcoefficients[i];
+			t += 1.0 / L;
+		}
+		for (int i = 0; i < coefficients.length; i++) {
+			coefficients[i] = (int) Math.round((L * (initcoefficients[i] / sum)) * WORD_LENGTH);
+		}
+
+		print(coefficients);
+	}
+
+	private static void print(int[] coefficients) {
+		for (int i = 0; i < coefficients.length; i++) {
+			int coefficient = coefficients[i];
+			String print = Integer.toHexString(coefficient);
+			if (coefficient < 0) {
+				print = print.substring(4);
+			} else {
+				while (print.length() < 4) {
+					print = "0" + print;
+				}
+			}
+			System.out.println(print);
+		}
+	}
+
+	private static double lanczos2(double t) {
+		double result = 0;
+		if (-2 < t && t < 2) {
+			result = sinc(t) * sinc(t / 2);
+		}
+		return result;
+	}
+
+	private static double sinc(double t) {
+		double result = 1;
+		if (t != 0) {
+			double pit = Math.PI * t;
+			result = Math.sin(pit) / pit;
+		}
+		return result;
+	}
+
+	/**
+	 * @param args the command line arguments
+	 */
+	public static void main(String[] args) {
+		CoefficientGenerator cg = new CoefficientGenerator();
+	}
+}
+\end{verbatim}
+
