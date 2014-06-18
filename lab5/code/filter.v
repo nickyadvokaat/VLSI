@@ -32,7 +32,10 @@ module filter
 	// Delayed state counter, to compensate for the fact that I/O and computation happen simultaneously now.
 	reg [0:L_LOG-1] m;
 	// The last 4 input samples used in the FIR (excluding the newest, which will be in data_in)
-	reg signed [0:DWIDTH-1] in [0:3];
+	reg signed [0:DWIDTH-1] in0;
+	reg signed [0:DWIDTH-1] in1;
+	reg signed [0:DWIDTH-1] in2;
+	reg signed [0:DWIDTH-1] in3;
 
 	// The FIR coefficients (lots of them)
 	// Naively, we'd need [0:4L-1], but since the coefficients are
@@ -63,10 +66,10 @@ module filter
 		begin
 			req_in_buf <= 0;
 			req_out_buf <= 0;
-			in[0] <= 0;
-			in[1] <= 0;
-			in[2] <= 0;
-			in[3] <= 0;
+			in0 <= 0;
+			in1 <= 0;
+			in2 <= 0;
+			in3 <= 0;
 			partial1 <= 0;
 			partial2 <= 0;
 			partial3 <= 0;
@@ -81,11 +84,10 @@ module filter
 			// Read handshake complete
 			if (req_in && ack_in)
 			begin
-				// FIXME: comment on not having in[0]
-				in[0] <= data_in;
-				in[1] <= in[0];
-				in[2] <= in[1];
-				in[3] <= in[2];
+				in0 <= data_in;
+				in1 <= in0;
+				in2 <= in1;
+				in3 <= in2;
 
 				//sum <= (data_in >> 1) | (data_in & 32768);
 				req_out_buf <= 1;
@@ -116,11 +118,11 @@ module filter
 
 				m <= l;
 
-				// pipelined: sum <= (in[0] * h[l] + in[1] * h[l+L] + in[2] * h[l+L*2] + in[3] * h[l+L*3]);
-				partial1 <= in[0] * h[m];      // h[m+L*0]
-				partial2 <= in[1] * h[m+L];    // h[m+L*1]
-				partial3 <= in[2] * h[L*2-m];  // h[m+L*2], mirrored
-				partial4 <= in[3] * h[L-m];    // h[m+L*3], mirrored
+				// pipelined: sum <= (in0 * h[l] + in1 * h[l+L] + in2 * h[l+L*2] + in3 * h[l+L*3]);
+				partial1 <= in0 * h[m];      // h[m+L*0]
+				partial2 <= in1 * h[m+L];    // h[m+L*1]
+				partial3 <= in2 * h[L*2-m];  // h[m+L*2], mirrored
+				partial4 <= in3 * h[L-m];    // h[m+L*3], mirrored
 				sum <= partial1 + partial2 + partial3 + partial4;
 			end
 
