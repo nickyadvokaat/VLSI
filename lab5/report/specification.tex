@@ -1,1 +1,8 @@
 \section{Problem Specification and Requirements}
+We need to implement an upscaler that can process $n$ streams at once, where all streams have the same sample rate and the same upscaling factor. This means we can reuse most of our code from L4 in which we created a single stream upscaler. The calculations performed for each stream are the same as for a single stream, so we just need to store more inputs and interleave the filtering. The coefficients and the way they are stored are equal can be copied from assignment L4 as well. 
+The upscaler has the following requirements:
+\begin{itemize}
+\item The system must run at 100 MHz.
+\item The system can handle at least 128 streams, but preferably more. We will incrementally test the filter on the number of input streams.
+\item All streams are correctly upscaled from 44.1 kHZ to 48 kHZ and outputted in the correct order.
+\end{itemize}
