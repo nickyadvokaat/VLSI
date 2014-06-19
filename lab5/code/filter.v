@@ -32,10 +32,7 @@ module filter
 	// state counter. l = nM mod L (calculated efficiently using conditionals and addition/subtraction)
 	reg [0:L_LOG-1] l;
 	// Delayed state counter, to compensate for the fact that I/O and computation happen simultaneously now.
-	reg [0:L_LOG-1] m0;
-	reg [0:L_LOG-1] m1;
-	reg [0:L_LOG-1] m2;
-	reg [0:L_LOG-1] m3;
+	reg [0:L_LOG-1] m;
 	// The last 4 input samples used in the FIR (excluding the newest, which will be in data_in)
 	reg signed [0:DWIDTH-1] in0 [0:NR_STREAMS-1];
 	reg signed [0:DWIDTH-1] in1 [0:NR_STREAMS-1];
@@ -45,16 +42,13 @@ module filter
 	// The FIR coefficients (lots of them)
 	// Naively, we'd need [0:4L-1], but since the coefficients are
 	// symmetric around h[2L], we can just reuse h[2L-1:1] for // h[2L+1:4L-1]
-	reg signed [0:DWIDTH-1] h0 [0:L-1];
-	reg signed [0:DWIDTH-1] h1 [0:L-1];
-	reg signed [0:DWIDTH-1] h2 [0:L-1];
-	reg signed [0:DWIDTH-1] h3 [0:L-1];
+	reg signed [0:DWIDTH-1] h [0:2*L];
 	
 	// The 4 products in the sum are buffered as partial results for pipelining
-	reg signed [0:DDWIDTH-1] partial0 [0:NR_STREAMS-1];
-	reg signed [0:DDWIDTH-1] partial1 [0:NR_STREAMS-1];
-	reg signed [0:DDWIDTH-1] partial2 [0:NR_STREAMS-1];
-	reg signed [0:DDWIDTH-1] partial3 [0:NR_STREAMS-1];
+	// reg signed [0:DDWIDTH-1] partial1 [0:NR_STREAMS-1];
+	// reg signed [0:DDWIDTH-1] partial2 [0:NR_STREAMS-1];
+	// reg signed [0:DDWIDTH-1] partial3 [0:NR_STREAMS-1];
+	// reg signed [0:DDWIDTH-1] partial4 [0:NR_STREAMS-1];
 	// Accumulator (lower bits assigned to output port directly)
 	reg signed [0:DDWIDTH-1] sum;
 	assign data_out = sum >> 15;
@@ -63,10 +57,7 @@ module filter
 	initial
 	begin
 		// Initialize the ROM with coefficients from file
-		$readmemh("coefficients0.txt", h0);
-		$readmemh("coefficients1.txt", h1);
-		$readmemh("coefficients2.txt", h2);
-		$readmemh("coefficients3.txt", h3);
+		$readmemh("coefficients.txt", h);
 	end
 
 
@@ -121,20 +112,16 @@ module filter
 						req_in_buf <= 1;
 					end
 
-					// m <= l;
-					m0 <= l;
-					m1 <= l;
-					m2 <= l;
-					m3 <= l;
+					m <= l;
 				end
 
 				// pipelined: sum <= (in0 * h[l] + in1 * h[l+L] + in2 * h[l+L*2] + in3 * h[l+L*3]);
-				partial0[stream] <= in0[stream] * h0[m0];      // h[m+L*0]
-				partial1[stream] <= in1[stream] * h1[m1];    // h[m+L*1]
-				partial2[stream] <= in2[stream] * h2[m2];  // h[m+L*2], mirrored
-				partial3[stream] <= in3[stream] * h3[m3];    // h[m+L*3], mirrored
-				sum <= partial0[stream] + partial1[stream] + partial2[stream] + partial3[stream];
-				// sum <= in0[stream] * h[m] + in1[stream] * h[m+L] + in2[stream] * h[L*2-m] + in3[stream] * h[L-m];
+				// partial1[stream] <= in0[stream] * h[m];      // h[m+L*0]
+				// partial2[stream] <= in1[stream] * h[m+L];    // h[m+L*1]
+				// partial3[stream] <= in2[stream] * h[L*2-m];  // h[m+L*2], mirrored
+				// partial4[stream] <= in3[stream] * h[L-m];    // h[m+L*3], mirrored
+				// sum <= partial1[stream] + partial2[stream] + partial3[stream] + partial4[stream];
+				sum <= in0[stream] * h[m] + in1[stream] * h[m+L] + in2[stream] * h[L*2-m] + in3[stream] * h[L-m];
 
 				stream <= (stream + 1) & (NR_STREAMS-1);
 			end
