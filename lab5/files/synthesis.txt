@@ -1,0 +1,593 @@
+Release 14.7 - xst P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.07 secs
+ 
+--> 
+Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.07 secs
+ 
+--> 
+Reading design: filter.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Parsing
+  3) HDL Elaboration
+  4) HDL Synthesis
+       4.1) HDL Synthesis Report
+  5) Advanced HDL Synthesis
+       5.1) Advanced HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Partition Report
+  8) Design Summary
+       8.1) Primitive and Black Box Usage
+       8.2) Device utilization summary
+       8.3) Partition Resource Summary
+       8.4) Timing Report
+            8.4.1) Clock Information
+            8.4.2) Asynchronous Control Signals Information
+            8.4.3) Timing Summary
+            8.4.4) Timing Details
+            8.4.5) Cross Clock Domains Report
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "filter.prj"
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "filter"
+Output Format                      : NGC
+Target Device                      : xc6slx45-3-csg324
+
+---- Source Options
+Top Module Name                    : filter
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Shift Register Extraction          : YES
+ROM Style                          : Auto
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Shift Register Minimum Size        : 2
+Use DSP Block                      : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+LUT Combining                      : Auto
+Reduce Control Sets                : Auto
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 16
+Register Duplication               : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Auto
+Use Synchronous Set                : Auto
+Use Synchronous Reset              : Auto
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Power Reduction                    : NO
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+DSP48 Utilization Ratio            : 100
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Parsing                                  *
+=========================================================================
+Analyzing Verilog file "/home/marcelm/Shared/lab5/multiscaler-work/filter.v" into library work
+Parsing module <filter>.
+
+=========================================================================
+*                            HDL Elaboration                            *
+=========================================================================
+
+Elaborating module <filter>.
+Reading initialization file \"coefficients.txt\".
+WARNING:HDLCompiler:413 - "/home/marcelm/Shared/lab5/multiscaler-work/filter.v" Line 54: Result of 18-bit expression is truncated to fit in 16-bit target.
+WARNING:HDLCompiler:413 - "/home/marcelm/Shared/lab5/multiscaler-work/filter.v" Line 105: Result of 9-bit expression is truncated to fit in 8-bit target.
+WARNING:HDLCompiler:413 - "/home/marcelm/Shared/lab5/multiscaler-work/filter.v" Line 111: Result of 32-bit expression is truncated to fit in 8-bit target.
+WARNING:HDLCompiler:413 - "/home/marcelm/Shared/lab5/multiscaler-work/filter.v" Line 126: Result of 32-bit expression is truncated to fit in 10-bit target.
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <filter>.
+    Related source file is "/home/marcelm/Shared/lab5/multiscaler-work/filter.v".
+        DWIDTH = 16
+        DDWIDTH = 32
+        L = 160
+        L_LOG = 8
+        M = 147
+        M_LOG = 8
+        CWIDTH = 640
+        NR_STREAMS = 1024
+        NR_STREAMS_LOG = 10
+WARNING:Xst:2999 - Signal 'h', unconnected in block 'filter', is tied to its initial value.
+    Found 1024x16-bit single-port RAM <Mram_in0> for signal <in0>.
+    Found 1024x16-bit single-port RAM <Mram_in1> for signal <in1>.
+    Found 1024x16-bit single-port RAM <Mram_in2> for signal <in2>.
+    Found 1024x16-bit single-port RAM <Mram_in3> for signal <in3>.
+    Found 1-bit register for signal <req_out>.
+    Found 10-bit register for signal <stream>.
+    Found 8-bit register for signal <l>.
+    Found 8-bit register for signal <m>.
+    Found 32-bit register for signal <sum>.
+    Found 1-bit register for signal <req_in>.
+    Found 9-bit subtractor for signal <GND_1_o_GND_1_o_sub_31_OUT> created at line 124.
+    Found 8-bit adder for signal <l[0]_PWR_1_o_add_11_OUT> created at line 105.
+    Found 9-bit adder for signal <n0117> created at line 124.
+    Found 32-bit adder for signal <n0128> created at line 124.
+    Found 32-bit adder for signal <n0131> created at line 124.
+    Found 32-bit adder for signal <stream[0]_stream[0]_add_33_OUT> created at line 124.
+    Found 11-bit adder for signal <n0135[10:0]> created at line 126.
+    Found 8-bit subtractor for signal <GND_1_o_GND_1_o_sub_13_OUT<7:0>> created at line 111.
+    Found 9-bit subtractor for signal <GND_1_o_GND_1_o_sub_26_OUT<8:0>> created at line 124.
+    Found 16x16-bit multiplier for signal <n0125> created at line 124.
+    Found 16x16-bit multiplier for signal <n0126> created at line 124.
+    Found 16x16-bit multiplier for signal <n0129> created at line 124.
+    Found 16x16-bit multiplier for signal <n0132> created at line 124.
+WARNING:Xst:3035 - Index value(s) does not match array range for signal <h>, simulation mismatch.
+    Found 321x16-bit dual-port Read Only RAM <Mram_h> for signal <h>.
+    Found 8-bit comparator greater for signal <l[0]_GND_1_o_LessThan_11_o> created at line 103
+    Summary:
+	inferred   6 RAM(s).
+	inferred   4 Multiplier(s).
+	inferred   8 Adder/Subtractor(s).
+	inferred  60 D-type flip-flop(s).
+	inferred   1 Comparator(s).
+	inferred   3 Multiplexer(s).
+Unit <filter> synthesized.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# RAMs                                                 : 6
+ 1024x16-bit single-port RAM                           : 4
+ 321x16-bit dual-port Read Only RAM                    : 2
+# Multipliers                                          : 4
+ 16x16-bit multiplier                                  : 4
+# Adders/Subtractors                                   : 8
+ 11-bit adder                                          : 1
+ 32-bit adder                                          : 3
+ 8-bit addsub                                          : 1
+ 9-bit adder                                           : 1
+ 9-bit subtractor                                      : 2
+# Registers                                            : 6
+ 1-bit register                                        : 2
+ 10-bit register                                       : 1
+ 32-bit register                                       : 1
+ 8-bit register                                        : 2
+# Comparators                                          : 1
+ 8-bit comparator greater                              : 1
+# Multiplexers                                         : 3
+ 1-bit 2-to-1 multiplexer                              : 2
+ 8-bit 2-to-1 multiplexer                              : 1
+
+=========================================================================
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+WARNING:Xst:2677 - Node <sum_31> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_30> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_29> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_28> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_27> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_26> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_25> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_24> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_23> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_22> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_21> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_20> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_19> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_18> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_17> of sequential type is unconnected in block <filter>.
+WARNING:Xst:2677 - Node <sum_0> of sequential type is unconnected in block <filter>.
+
+Synthesizing (advanced) Unit <filter>.
+The following registers are absorbed into accumulator <l>: 1 register on signal <l>.
+The following registers are absorbed into counter <stream>: 1 register on signal <stream>.
+	The following adders/subtractors are grouped into adder tree <Madd_stream[0]_stream[0]_add_33_OUT1> :
+ 	<Madd_n0128> in block <filter>, 	<Madd_n0131> in block <filter>, 	<Madd_stream[0]_stream[0]_add_33_OUT> in block <filter>.
+	Multiplier <Mmult_n0132> in block <filter> and adder/subtractor <ADDER_FOR_MULTADD_Madd2> in block <filter> are combined into a MAC<Maddsub_n0132>.
+	The following registers are also absorbed by the MAC: <sum> in block <filter>.
+	Multiplier <Mmult_n0129> in block <filter> and adder/subtractor <ADDER_FOR_MULTADD_Madd1> in block <filter> are combined into a MAC<Maddsub_n0129>.
+	Multiplier <Mmult_n0125> in block <filter> and adder/subtractor <ADDER_FOR_MULTADD_Madd> in block <filter> are combined into a MAC<Maddsub_n0125>.
+INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram_in0> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+    -----------------------------------------------------------------------
+    | ram_type           | Distributed                         |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 1024-word x 16-bit                  |          |
+    |     clkA           | connected to signal <clk>           | rise     |
+    |     weA            | connected to internal node          | high     |
+    |     addrA          | connected to signal <stream>        |          |
+    |     diA            | connected to signal <data_in>       |          |
+    |     doA            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram_in1> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+    -----------------------------------------------------------------------
+    | ram_type           | Distributed                         |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 1024-word x 16-bit                  |          |
+    |     clkA           | connected to signal <clk>           | rise     |
+    |     weA            | connected to internal node          | high     |
+    |     addrA          | connected to signal <stream>        |          |
+    |     diA            | connected to signal <_n0143>        |          |
+    |     doA            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram_in2> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+    -----------------------------------------------------------------------
+    | ram_type           | Distributed                         |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 1024-word x 16-bit                  |          |
+    |     clkA           | connected to signal <clk>           | rise     |
+    |     weA            | connected to internal node          | high     |
+    |     addrA          | connected to signal <stream>        |          |
+    |     diA            | connected to signal <_n0144>        |          |
+    |     doA            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram_in3> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+    -----------------------------------------------------------------------
+    | ram_type           | Distributed                         |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 1024-word x 16-bit                  |          |
+    |     clkA           | connected to signal <clk>           | rise     |
+    |     weA            | connected to internal node          | high     |
+    |     addrA          | connected to signal <stream>        |          |
+    |     diA            | connected to signal <_n0145>        |          |
+    |     doA            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram_h> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+    -----------------------------------------------------------------------
+    | ram_type           | Distributed                         |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 321-word x 16-bit                   |          |
+    |     weA            | connected to signal <GND>           | high     |
+    |     addrA          | connected to signal <("0",m)>       |          |
+    |     diA            | connected to signal <GND>           |          |
+    |     doA            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+    | Port B                                                              |
+    |     aspect ratio   | 321-word x 16-bit                   |          |
+    |     addrB          | connected to signal <n0117>         |          |
+    |     doB            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram_h1> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+    -----------------------------------------------------------------------
+    | ram_type           | Distributed                         |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 321-word x 16-bit                   |          |
+    |     weA            | connected to signal <GND>           | high     |
+    |     addrA          | connected to signal <GND_1_o_GND_1_o_sub_26_OUT> |          |
+    |     diA            | connected to signal <GND>           |          |
+    |     doA            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+    | Port B                                                              |
+    |     aspect ratio   | 321-word x 16-bit                   |          |
+    |     addrB          | connected to signal <GND_1_o_GND_1_o_sub_31_OUT> |          |
+    |     doB            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+Unit <filter> synthesized (advanced).
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# RAMs                                                 : 6
+ 1024x16-bit single-port distributed RAM               : 4
+ 321x16-bit dual-port distributed Read Only RAM        : 2
+# MACs                                                 : 3
+ 16x16-to-32-bit MAC                                   : 3
+# Multipliers                                          : 1
+ 16x16-bit multiplier                                  : 1
+# Adders/Subtractors                                   : 3
+ 9-bit adder                                           : 1
+ 9-bit subtractor                                      : 2
+# Counters                                             : 1
+ 10-bit up counter                                     : 1
+# Accumulators                                         : 1
+ 8-bit updown accumulator                              : 1
+# Registers                                            : 10
+ Flip-Flops                                            : 10
+# Comparators                                          : 1
+ 8-bit comparator greater                              : 1
+# Multiplexers                                         : 3
+ 1-bit 2-to-1 multiplexer                              : 2
+ 8-bit 2-to-1 multiplexer                              : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <filter> ...
+INFO:Xst:2399 - RAMs <Mram_h26>, <Mram_h28> are equivalent, second RAM is removed
+INFO:Xst:2399 - RAMs <Mram_h26>, <Mram_h30> are equivalent, second RAM is removed
+INFO:Xst:2399 - RAMs <Mram_h26>, <Mram_h32> are equivalent, second RAM is removed
+INFO:Xst:2399 - RAMs <Mram_h134>, <Mram_h136> are equivalent, second RAM is removed
+INFO:Xst:2399 - RAMs <Mram_h134>, <Mram_h138> are equivalent, second RAM is removed
+INFO:Xst:2399 - RAMs <Mram_h134>, <Mram_h140> are equivalent, second RAM is removed
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block filter, actual ratio is 0.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 28
+ Flip-Flops                                            : 28
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Design Summary                             *
+=========================================================================
+
+Top Level Output File Name         : filter.ngc
+
+Primitive and Black Box Usage:
+------------------------------
+# BELS                             : 200
+#      GND                         : 1
+#      INV                         : 3
+#      LUT1                        : 9
+#      LUT2                        : 5
+#      LUT3                        : 25
+#      LUT4                        : 8
+#      LUT5                        : 58
+#      LUT6                        : 71
+#      MUXCY                       : 9
+#      VCC                         : 1
+#      XORCY                       : 10
+# FlipFlops/Latches                : 28
+#      FDE                         : 8
+#      FDR                         : 2
+#      FDRE                        : 18
+# RAMS                             : 346
+#      RAM128X1D                   : 90
+#      RAM256X1S                   : 256
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 37
+#      IBUF                        : 19
+#      OBUF                        : 18
+# DSPs                             : 4
+#      DSP48A1                     : 4
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 6slx45csg324-3 
+
+
+Slice Logic Utilization: 
+ Number of Slice Registers:              28  out of  54576     0%  
+ Number of Slice LUTs:                 1563  out of  27288     5%  
+    Number used as Logic:               179  out of  27288     0%  
+    Number used as Memory:             1384  out of   6408    21%  
+       Number used as RAM:             1384
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:   1570
+   Number with an unused Flip Flop:    1542  out of   1570    98%  
+   Number with an unused LUT:             7  out of   1570     0%  
+   Number of fully used LUT-FF pairs:    21  out of   1570     1%  
+   Number of unique control sets:         4
+
+IO Utilization: 
+ Number of IOs:                          38
+ Number of bonded IOBs:                  38  out of    218    17%  
+
+Specific Feature Utilization:
+ Number of BUFG/BUFGCTRLs:                1  out of     16     6%  
+ Number of DSP48A1s:                      4  out of     58     6%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+Timing Report
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 285   |
+N0                                 | NONE(Mram_h156)        | 90    |
+-----------------------------------+------------------------+-------+
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -3
+
+   Minimum period: 14.714ns (Maximum Frequency: 67.961MHz)
+   Minimum input arrival time before clock: 5.033ns
+   Maximum output required time after clock: 4.350ns
+   Maximum combinational path delay: No path found
+
+Timing Details:
+---------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clk'
+  Clock period: 14.714ns (frequency: 67.961MHz)
+  Total number of paths / destination ports: 16069055 / 2635
+-------------------------------------------------------------------------
+Delay:               14.714ns (Levels of Logic = 5)
+  Source:            m_2 (FF)
+  Destination:       Maddsub_n0132 (DSP)
+  Source Clock:      clk rising
+  Destination Clock: clk rising
+
+  Data Path: m_2 to Maddsub_n0132
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q             57   0.447   1.698  m_2 (m_2)
+     LUT3:I1->O           16   0.203   1.109  n0117<7>1 (n0117<7>)
+     LUT5:I3->O            3   0.203   0.650  inst_LPM_MUX311111 (BUS_0006_read_port_21_OUT<15>)
+     DSP48A1:A15->PCOUT47    1   4.469   0.000  Mmult_n0126 (Mmult_n0126_PCOUT_to_Maddsub_n0125_PCIN_47)
+     DSP48A1:PCIN47->PCOUT47    1   2.265   0.000  Maddsub_n0125 (Maddsub_n0125_PCOUT_to_Maddsub_n0129_PCIN_47)
+     DSP48A1:PCIN47->PCOUT47    1   2.265   0.000  Maddsub_n0129 (Maddsub_n0129_PCOUT_to_Maddsub_n0132_PCIN_47)
+     DSP48A1:PCIN47            1.405          Maddsub_n0132
+    ----------------------------------------
+    Total                     14.714ns (11.257ns logic, 3.457ns route)
+                                       (76.5% logic, 23.5% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
+  Total number of paths / destination ports: 638 / 369
+-------------------------------------------------------------------------
+Offset:              5.033ns (Levels of Logic = 5)
+  Source:            ack_out (PAD)
+  Destination:       req_in_buf (FF)
+  Destination Clock: clk rising
+
+  Data Path: ack_out to req_in_buf
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             8   1.222   1.050  ack_out_IBUF (ack_out_IBUF)
+     LUT6:I2->O            1   0.203   0.580  req_in_buf_GND_1_o_MUX_63_o1 (req_in_buf_GND_1_o_MUX_63_o1)
+     LUT6:I5->O            1   0.205   0.580  req_in_buf_GND_1_o_MUX_63_o2 (req_in_buf_GND_1_o_MUX_63_o2)
+     LUT4:I3->O            1   0.205   0.684  req_in_buf_GND_1_o_MUX_63_o3 (req_in_buf_GND_1_o_MUX_63_o)
+     LUT6:I4->O            1   0.203   0.000  req_in_buf_glue_set (req_in_buf_glue_set)
+     FDR:D                     0.102          req_in_buf
+    ----------------------------------------
+    Total                      5.033ns (2.140ns logic, 2.893ns route)
+                                       (42.5% logic, 57.5% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 18 / 18
+-------------------------------------------------------------------------
+Offset:              4.350ns (Levels of Logic = 1)
+  Source:            Maddsub_n0132 (DSP)
+  Destination:       data_out<0> (PAD)
+  Source Clock:      clk rising
+
+  Data Path: Maddsub_n0132 to data_out<0>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     DSP48A1:CLK->P30      1   1.200   0.579  Maddsub_n0132 (data_out_0_OBUF)
+     OBUF:I->O                 2.571          data_out_0_OBUF (data_out<0>)
+    ----------------------------------------
+    Total                      4.350ns (3.771ns logic, 0.579ns route)
+                                       (86.7% logic, 13.3% route)
+
+=========================================================================
+
+Cross Clock Domains Report:
+--------------------------
+
+Clock to Setup on destination clock N0
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+clk            |    5.055|         |         |         |
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock clk
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+clk            |   14.714|         |         |         |
+---------------+---------+---------+---------+---------+
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 10.00 secs
+Total CPU time to Xst completion: 9.03 secs
+ 
+--> 
+
+
+Total memory usage is 390092 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   22 (   0 filtered)
+Number of infos    :   14 (   0 filtered)
+
+
