@@ -6,8 +6,8 @@ module multitest;
 parameter DWIDTH = 16;
 
 //Vary these parameters for testing the scalability
-parameter NR_STREAMS = 16;
-parameter NR_STREAMS_LOG = 4;
+parameter NR_STREAMS = 1;
+parameter NR_STREAMS_LOG = 0;
 parameter STR_IND = 0;
 
 
